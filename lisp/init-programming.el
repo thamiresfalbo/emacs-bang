@@ -33,10 +33,8 @@
 (use-package company-c-headers)
 (use-package company-auctex)
 
-;;(use-package company-box
-  ;;:blackout
-  ;;:config
-  ;;:hook (company-mode))
+(use-package company-box
+  :hook (company-mode . company-box-mode))
 
 ;; Fixes
 (advice-add 'company-complete-common :before (lambda () (setq my-company-point (point))))
@@ -46,8 +44,7 @@
 
 ;; Formatting because i'm not paid for it
 (use-package format-all
-  :blackout
-  :hook (prog-mode))
+  :hook (prog-mode . format-all-mode))
 
 (use-package rainbow-delimiters :config (rainbow-delimiters-mode))
 
@@ -79,25 +76,26 @@
 
 (defun company-mode/backend-with-yas (backend)
   (if (or (not company-mode/enable-yas) (and (listp backend) (member 'company-yasnippet backend)))
-     backend
+      backend
     (append (if (consp backend) backend (list backend))
-           '(:with company-yasnippet))))
+            '(:with company-yasnippet))))
 
 (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
 
 
 ;;; PROGRAMMING
 (require 'init-projectile)
-(require 'init-latex)
+;; (require 'init-latex)
 (require 'init-web)
 (require 'init-eglot)
 ;; (require 'init-lsp)
-(require 'init-swift)
-(require 'init-lua)
+;; (require 'init-swift)
+;; (require 'init-lua)
 (require 'init-ruby)
-(require 'init-v)
-(require 'init-lisp)
-(use-package lispy)
+(require 'init-elixir)
+;; (require 'init-v)
+;; (require 'init-lisp)
+;; (use-package lispy)
 
 (provide 'init-programming)
 ;;; init-programming.el ends here
